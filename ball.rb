@@ -19,6 +19,7 @@ class Ball < Circle
     if is_move
       move_(:x)
       move_(:y)
+      game_failed_check
     end
   end
 
@@ -29,6 +30,27 @@ class Ball < Circle
       eval("self.#{axis.to_s} += speed")
     else
       eval("self.#{axis.to_s} -= speed")
+    end
+    wall_refrect
+  end
+
+  def wall_refrect
+    if self.contains?(self.x, 0)
+      self.y_flug = true
+    end
+    if self.contains?(0, self.y)
+      self.x_flug = true
+    end
+    if self.contains?(Window.width, self.y)
+      self.x_flug = false
+    end
+  end
+
+  def game_failed_check
+    if self.y > Window.height
+      self.is_move = false
+      self.x_flug = true
+      self.y_flug = false
     end
   end
 end

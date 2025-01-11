@@ -21,6 +21,12 @@ class Bar < Rectangle
     limit
   end
 
+  def refrect(ball)
+    if self.contains?(ball.x, ball.y + ball.radius)
+      ball.y_flug = false
+    end
+  end
+
   private
 
   def limit
