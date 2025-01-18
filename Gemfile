@@ -4,3 +4,4 @@ source "https://rubygems.org"
 
 gem "ruby2d"
 gem "byebug"
+gem "rake"
