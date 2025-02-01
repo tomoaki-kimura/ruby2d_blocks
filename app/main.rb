@@ -5,6 +5,8 @@ ball = Ball.new
 ball.follow(bar)
 main_title = MainTitle.new
 state = State.new
+tick = 0
+blocks = []
 
 update do
   case state.screen_status
@@ -16,12 +18,10 @@ update do
       ball.follow(bar)
     end
   when :main_title
-    tick = 0
-    update do
-      main_title.color_change if tick % 5 == 0
-      tick += 1
-    end
+    main_title.color_change if tick % 5 == 0
   end
+
+  tick += 1
 end
 
 on :key do |event|
@@ -40,6 +40,11 @@ on :key_down do |event|
       ball.is_move = true
     end
   when :main_title
+    if event.key == "space"
+      blocks = Block.start
+      main_title.remove
+      state.to_game_start
+    end
   end
 end
 

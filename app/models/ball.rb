@@ -3,7 +3,7 @@ class Ball < Circle
 
   def initialize
     super
-    self.radius = 10
+    self.radius = 7
     self.is_move = false
     self.x_flug = true
     self.y_flug = false

@@ -14,4 +14,9 @@ class MainTitle
   def color_change
     self.title.color = "random"
   end
+
+  def remove
+    self.title.remove
+    self.message.remove
+  end
 end
