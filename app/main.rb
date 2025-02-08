@@ -14,6 +14,9 @@ update do
     if ball.is_move
       ball.move
       bar.refrect(ball)
+      blocks.each do |block|
+        block.hit(ball) if block.is_active
+      end
     else
       ball.follow(bar)
     end

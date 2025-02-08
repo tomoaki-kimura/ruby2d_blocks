@@ -18,6 +18,12 @@ class Block < Rectangle
     self.blocks(maps)
   end
 
+  def hit(ball)
+    if ball.contains?(ball.x, self.y + self.height) && ball.x > self.x && ball.x < self.x + self.width
+      self.reject_block_and_refrect(ball)
+    end
+  end
+
   private
 
   def self.blocks(maps)
@@ -36,6 +42,7 @@ class Block < Rectangle
           block.is_breakable = false
           block.color = "silver"
         end
+        block
       end
     end
     blocks.flatten
@@ -43,5 +50,30 @@ class Block < Rectangle
 
   def self.colors
     ["red", "orange", "yellow", "green", "olive", "blue", "purple"]
+  end
+
+  def block_break_if_breakable 
+    if self.is_breakable
+      self.is_active = false
+      self.remove
+    end
+  end
+
+  def reject_block_and_refrect(ball)
+    ball.y_flug = true
+    self.block_break_if_breakable
+  end
+  #TODO:ball.y_flug の動きを４パターンに分ける必要あり。
+
+  def top_hit(ball)
+  end
+
+  def bottom_hit(ball)
+  end
+
+  def left_hit(ball)
+  end
+
+  def right_hit(ball)
   end
 end
