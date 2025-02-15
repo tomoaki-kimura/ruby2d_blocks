@@ -1,5 +1,5 @@
 class Ball < Circle
-  attr_accessor :is_move, :x_flug, :y_flug, :speed
+  attr_accessor :is_move, :x_flug, :y_flug, :speed, :score, :score_display
 
   def initialize
     super
@@ -8,6 +8,8 @@ class Ball < Circle
     self.x_flug = true
     self.y_flug = false
     self.speed = 5
+    self.score = 0
+    self.score_display = Text.new(0)
   end
 
   def follow(bar)

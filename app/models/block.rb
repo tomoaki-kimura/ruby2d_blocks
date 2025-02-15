@@ -19,8 +19,17 @@ class Block < Rectangle
   end
 
   def hit(ball)
-    if ball.contains?(ball.x, self.y + self.height) && ball.x > self.x && ball.x < self.x + self.width
-      self.reject_block_and_refrect(ball)
+    if bottom_hit?(ball)
+      self.reject_block_and_refrect_up_to_down(ball)
+    end
+    if top_hit?(ball)
+      self.reject_block_and_refrect_down_to_up(ball)
+    end
+    if left_hit?(ball)
+      self.reject_block_and_refrect_right_to_left(ball)
+    end
+    if right_hit?(ball)
+      self.reject_block_and_refrect_left_to_right(ball)
     end
   end
 
@@ -59,21 +68,51 @@ class Block < Rectangle
     end
   end
 
-  def reject_block_and_refrect(ball)
+  def reject_block_and_refrect_up_to_down(ball)
     ball.y_flug = true
     self.block_break_if_breakable
-  end
-  #TODO:ball.y_flug の動きを４パターンに分ける必要あり。
-
-  def top_hit(ball)
-  end
-
-  def bottom_hit(ball)
+    ball.score_display.remove
+    ball.score += 10
+    ball.score_display = Text.new(ball.score)
   end
 
-  def left_hit(ball)
+  def reject_block_and_refrect_down_to_up(ball)
+    ball.y_flug = false
+    self.block_break_if_breakable
+    ball.score_display.remove
+    ball.score += 10
+    ball.score_display = Text.new(ball.score)
   end
 
-  def right_hit(ball)
+  def reject_block_and_refrect_left_to_right(ball)
+    ball.x_flug = true
+    self.block_break_if_breakable
+    ball.score_display.remove
+    ball.score += 10
+    ball.score_display = Text.new(ball.score)
+  end
+
+  def reject_block_and_refrect_right_to_left(ball)
+    ball.x_flug = false
+    self.block_break_if_breakable
+    ball.score_display.remove
+    ball.score += 10
+    ball.score_display = Text.new(ball.score)
+  end
+
+  def top_hit?(ball)
+    ball.contains?(ball.x, self.y) && ball.x > self.x && ball.x < self.x + self.width
+  end
+
+  def bottom_hit?(ball)
+    ball.contains?(ball.x, self.y + self.height) && ball.x > self.x && ball.x < self.x + self.width
+  end
+
+  def left_hit?(ball)
+    ball.contains?(self.x, ball.y) && ball.y > self.y && ball.y < self.y + self.height
+  end
+
+  def right_hit?(ball)
+    ball.contains?(self.x + self.width, ball.y) && ball.y > self.y && ball.y < self.y + self.height
   end
 end
