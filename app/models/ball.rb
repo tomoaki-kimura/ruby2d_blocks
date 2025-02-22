@@ -1,5 +1,5 @@
 class Ball < Circle
-  attr_accessor :is_move, :x_flug, :y_flug, :speed, :score, :score_display
+  attr_accessor :is_move, :x_flug, :y_flug, :speed, :score, :score_display, :life, :life_display
 
   def initialize
     super
@@ -9,7 +9,9 @@ class Ball < Circle
     self.y_flug = false
     self.speed = 5
     self.score = 0
-    self.score_display = Text.new(0)
+    self.score_reload
+    self.life = 3
+    self.life_reload
   end
 
   def follow(bar)
@@ -17,12 +19,23 @@ class Ball < Circle
     self.y = bar.y - radius
   end
 
-  def move
+  def move(state)
     if is_move
       move_(:x)
       move_(:y)
-      game_failed_check
+      game_failed_check(state)
     end
+  end
+
+  def score_reload
+    self.score_display = Text.new("score: #{ sprintf("%07d", self.score) }", x: (Window.width))
+    self.score_display.x -= self.score_display.width + 30
+    self.score_display
+  end
+
+  def life_reload
+    self.life_display = Text.new("life x #{ self.life }", x: 30 )
+    self.score_display
   end
 
   private
@@ -48,11 +61,17 @@ class Ball < Circle
     end
   end
 
-  def game_failed_check
+  def game_failed_check(state)
     if self.y > Window.height
       self.is_move = false
       self.x_flug = true
       self.y_flug = false
+      self.life_display.remove
+      self.life -= 1
+      self.life_reload
+      if life <= 0
+        state.to_game_over
+      end
     end
   end
 end

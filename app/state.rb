@@ -12,4 +12,8 @@ class State
   def to_game_start
     @screen_status = :game_start
   end
+
+  def to_game_over
+    @screen_status = :game_over
+  end
 end

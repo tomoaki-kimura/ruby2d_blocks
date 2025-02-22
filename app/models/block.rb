@@ -73,7 +73,7 @@ class Block < Rectangle
     self.block_break_if_breakable
     ball.score_display.remove
     ball.score += 10
-    ball.score_display = Text.new(ball.score)
+    ball.score_reload
   end
 
   def reject_block_and_refrect_down_to_up(ball)
@@ -81,7 +81,7 @@ class Block < Rectangle
     self.block_break_if_breakable
     ball.score_display.remove
     ball.score += 10
-    ball.score_display = Text.new(ball.score)
+    ball.score_reload
   end
 
   def reject_block_and_refrect_left_to_right(ball)
@@ -89,7 +89,7 @@ class Block < Rectangle
     self.block_break_if_breakable
     ball.score_display.remove
     ball.score += 10
-    ball.score_display = Text.new(ball.score)
+    ball.score_reload
   end
 
   def reject_block_and_refrect_right_to_left(ball)
@@ -97,7 +97,7 @@ class Block < Rectangle
     self.block_break_if_breakable
     ball.score_display.remove
     ball.score += 10
-    ball.score_display = Text.new(ball.score)
+    ball.score_reload
   end
 
   def top_hit?(ball)

@@ -7,12 +7,13 @@ main_title = MainTitle.new
 state = State.new
 tick = 0
 blocks = []
+game_over_message = nil
 
 update do
   case state.screen_status
   when :game_start
     if ball.is_move
-      ball.move
+      ball.move(state)
       bar.refrect(ball)
       blocks.each do |block|
         block.hit(ball) if block.is_active
@@ -22,6 +23,10 @@ update do
     end
   when :main_title
     main_title.color_change if tick % 5 == 0
+  when :game_over
+    if game_over_message == nil
+      geme_over_message = Text.new("hello")
+    end
   end
 
   tick += 1
