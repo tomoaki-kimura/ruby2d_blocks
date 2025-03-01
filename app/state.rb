@@ -1,8 +1,10 @@
 class State
   attr_reader :screen_status
+  attr_accessor :blocks_size
 
   def initialize
     @screen_status = :main_title
+    self.blocks_size = 0
   end
 
   def to_main_title

@@ -11,11 +11,11 @@ class Block < Rectangle
     self.height = 15
   end
 
-  def self.start
+  def self.start(state)
     num = rand(1..1)
     data = CSV.read("app/maps/stage_1.csv")
     maps = data.map { |row| row.map(&:to_i) }
-    self.blocks(maps)
+    self.blocks(maps, state)
   end
 
   def hit(ball)
@@ -35,7 +35,7 @@ class Block < Rectangle
 
   private
 
-  def self.blocks(maps)
+  def self.blocks(maps, state)
     blocks = maps.map.with_index(0) do |row, i|
       row.map.with_index(0) do |col, n|
         block = self.new
@@ -50,6 +50,8 @@ class Block < Rectangle
         elsif col == 2
           block.is_breakable = false
           block.color = "silver"
+        elsif col == 1
+          state.blocks_size += 1
         end
         block
       end

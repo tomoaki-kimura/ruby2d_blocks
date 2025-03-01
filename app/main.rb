@@ -7,7 +7,7 @@ main_title = MainTitle.new
 state = State.new
 tick = 0
 blocks = []
-game_over_message = nil
+game_over_message = GameOver.new
 
 update do
   case state.screen_status
@@ -24,12 +24,11 @@ update do
   when :main_title
     main_title.color_change if tick % 5 == 0
   when :game_over
-    if game_over_message == nil
-      geme_over_message = Text.new("hello")
-    end
+    game_over_message.add
   end
 
   tick += 1
+  p state.blocks_size
 end
 
 on :key do |event|
@@ -49,9 +48,27 @@ on :key_down do |event|
     end
   when :main_title
     if event.key == "space"
-      blocks = Block.start
+      blocks = Block.start(state)
       main_title.remove
       state.to_game_start
+    end
+  when :game_over
+    if event.key == "c"
+      game_over_message.remove
+      state.to_game_start
+      ball.remove
+      ball.score_display.remove
+      ball.life_display.remove
+      ball = Ball.new
+    elsif event.key == "r"
+      game_over_message.remove
+      state.to_game_start
+      ball.remove
+      ball.score_display.remove
+      ball.life_display.remove
+      ball = Ball.new
+      blocks.each { |block| block.remove }
+      blocks = Block.start(state)
     end
   end
 end
