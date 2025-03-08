@@ -1,10 +1,12 @@
 class State
-  attr_reader :screen_status
-  attr_accessor :blocks_size
+  attr_reader :screen_status, :stage_size
+  attr_accessor :blocks_size, :stage
 
   def initialize
+    @stage_size = 1
     @screen_status = :main_title
-    self.blocks_size = 0
+    self.blocks_size = 1
+    self.stage = 1
   end
 
   def to_main_title
@@ -17,5 +19,9 @@ class State
 
   def to_game_over
     @screen_status = :game_over
+  end
+
+  def to_stage_loading
+    @screen_status = :stage_loading
   end
 end

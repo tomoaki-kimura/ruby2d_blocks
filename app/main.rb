@@ -16,7 +16,7 @@ update do
       ball.move(state)
       bar.refrect(ball)
       blocks.each do |block|
-        block.hit(ball) if block.is_active
+        block.hit(ball, state) if block.is_active
       end
     else
       ball.follow(bar)
@@ -29,6 +29,9 @@ update do
 
   tick += 1
   p state.blocks_size
+  if state.blocks_size <= 0
+    state.to_stage_loading
+  end
 end
 
 on :key do |event|
@@ -49,6 +52,7 @@ on :key_down do |event|
   when :main_title
     if event.key == "space"
       blocks = Block.start(state)
+      state.blocks_size = blocks.select { |block| block.is_breakable }.size
       main_title.remove
       state.to_game_start
     end
@@ -69,6 +73,7 @@ on :key_down do |event|
       ball = Ball.new
       blocks.each { |block| block.remove }
       blocks = Block.start(state)
+      state.blocks_size = blocks.select { |block| block.is_breakable }.size
     end
   end
 end

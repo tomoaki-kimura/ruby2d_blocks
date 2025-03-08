@@ -12,24 +12,36 @@ class Block < Rectangle
   end
 
   def self.start(state)
-    num = rand(1..1)
-    data = CSV.read("app/maps/stage_1.csv")
+    num = state.stage
+    #byebug
+    data = CSV.read("app/maps/stage_#{num}.csv")
     maps = data.map { |row| row.map(&:to_i) }
-    self.blocks(maps, state)
+    bloaks = self.blocks(maps, state)
+    if state.stage >= num
+      state.stage = 1
+    else
+      state.stage += 1
+    end
+    blocks
   end
 
-  def hit(ball)
+  def hit(ball, state)
+
     if bottom_hit?(ball)
       self.reject_block_and_refrect_up_to_down(ball)
+      state.blocks_size -= 1
     end
     if top_hit?(ball)
       self.reject_block_and_refrect_down_to_up(ball)
+      state.blocks_size -= 1
     end
     if left_hit?(ball)
       self.reject_block_and_refrect_right_to_left(ball)
+      state.blocks_size -= 1
     end
     if right_hit?(ball)
       self.reject_block_and_refrect_left_to_right(ball)
+      state.blocks_size -= 1
     end
   end
 
