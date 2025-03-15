@@ -25,6 +25,9 @@ update do
     main_title.color_change if tick % 5 == 0
   when :game_over
     game_over_message.add
+  when :stage_loading
+    blocks = Block.start(state)
+    state.to_game_start
   end
 
   tick += 1

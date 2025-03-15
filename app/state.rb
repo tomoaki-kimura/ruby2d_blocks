@@ -3,7 +3,7 @@ class State
   attr_accessor :blocks_size, :stage
 
   def initialize
-    @stage_size = 1
+    @stage_size = 2
     @screen_status = :main_title
     self.blocks_size = 1
     self.stage = 1
