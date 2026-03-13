@@ -1,19 +1,17 @@
 require "ruby2d"
-
-class Ball < Circle
-  attr_accessor :speed
-
-  def initialize
-    super
-    self.speed = 5
-    self.radius = 10
-  end
-end
+require "./ball"
+require "./bar"
 
 ball = Ball.new
+bar = Bar.new
+ball.follow(bar)
+
+on :key do |event|
+  bar.move(event)
+end
 
 update do 
-  ball.x += ball.speed
+  ball.follow(bar)
 end
 
 show
