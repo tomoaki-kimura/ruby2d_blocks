@@ -6,12 +6,22 @@ ball = Ball.new
 bar = Bar.new
 ball.follow(bar)
 
+on :key_down do |event|
+  if !ball.is_move && event.key == "space"
+    ball.is_move = true
+  end
+end
+
 on :key do |event|
   bar.move(event)
 end
 
-update do 
-  ball.follow(bar)
+update do
+  if ball.is_move
+    ball.move
+  else
+    ball.follow(bar)
+  end
 end
 
 show

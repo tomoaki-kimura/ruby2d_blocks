@@ -14,9 +14,15 @@ class Bar < Rectangle
     key = event.key
     if key == "left"
       self.x -= self.speed
+      if self.x < 0
+        self.x = 0
+      end
     end
     if key == "right"
       self.x += self.speed
+      if self.x > Window.width - self.width
+        self.x = Window.width - self.width
+      end
     end
   end
 end
