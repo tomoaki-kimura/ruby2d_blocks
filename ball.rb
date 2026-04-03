@@ -26,5 +26,32 @@ class Ball < Circle
     else
       self.y -= self.speed
     end
+    refrect
+  end
+
+  private
+
+  def refrect
+    refrect_top
+    refrect_left
+    refrect_right
+  end
+
+  def refrect_top
+    if self.contains?(self.x, 0)
+      self.y_flug = true
+    end
+  end
+
+  def refrect_left
+    if self.contains?(0, self.y)
+      self.x_flug = true
+    end
+  end
+
+  def refrect_right
+    if self.contains?(Window.width, self.y)
+      self.x_flug = false
+    end
   end
 end

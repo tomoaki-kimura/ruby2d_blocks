@@ -19,6 +19,7 @@ end
 update do
   if ball.is_move
     ball.move
+    bar.refrect(ball)
   else
     ball.follow(bar)
   end

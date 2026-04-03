@@ -25,4 +25,11 @@ class Bar < Rectangle
       end
     end
   end
+
+  def refrect(ball)
+    refrect_range = ball.x >= self.x && ball.x <= self.x + self.width
+    if ball.contains?(ball.x, self.y) && refrect_range
+      ball.y_flug = false
+    end
+  end
 end
