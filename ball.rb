@@ -11,6 +11,7 @@ class Ball < Circle
   end
 
   def follow(bar)
+    self.x_flug = true
     self.x = bar.x + bar.width - self.radius * 2
     self.y = bar.y - self.radius
   end
@@ -27,6 +28,7 @@ class Ball < Circle
       self.y -= self.speed
     end
     refrect
+    fall_down
   end
 
   private
@@ -52,6 +54,12 @@ class Ball < Circle
   def refrect_right
     if self.contains?(Window.width, self.y)
       self.x_flug = false
+    end
+  end
+
+  def fall_down
+    if self.y > Window.height
+      self.is_move = false
     end
   end
 end
