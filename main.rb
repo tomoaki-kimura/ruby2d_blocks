@@ -1,9 +1,12 @@
 require "ruby2d"
 require "./ball"
 require "./bar"
+require "./block"
 
 ball = Ball.new
 bar = Bar.new
+blocks = Block.set_blocks
+
 ball.follow(bar)
 
 on :key_down do |event|
