@@ -3,6 +3,11 @@ require "./ball"
 require "./bar"
 require "./block"
 
+set(
+  width: 800,
+  height: 600
+)
+
 ball = Ball.new
 bar = Bar.new
 blocks = Block.set_blocks
