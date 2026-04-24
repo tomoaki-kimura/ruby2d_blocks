@@ -28,6 +28,7 @@ update do
   if ball.is_move
     ball.move
     bar.refrect(ball)
+    Block.broken_by(ball, blocks)
   else
     ball.follow(bar)
   end
