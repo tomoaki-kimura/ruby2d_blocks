@@ -34,14 +34,24 @@ class Block < Rectangle
 
   def self.broken_by(ball, blocks)
     blocks.each do |block|
-      block.refrect(ball, blocks)
+      if block.refrect(ball, blocks)
+        status = :game_clear if block_clear(blocks)
+      end
+    end
+  end
+
+  def self.block_clear(blocks)
+    if blocks.size == 0
+      true
+    else
+      false
     end
   end
 
   def refrect(ball, blocks)
-    top_refrect(ball, blocks)
-    bottom_refrect(ball, blocks)
-    right_refrect(ball, blocks)
+    top_refrect(ball, blocks) ||
+    bottom_refrect(ball, blocks) ||
+    right_refrect(ball, blocks) ||
     left_refrect(ball, blocks)
   end
 
@@ -58,11 +68,32 @@ class Block < Rectangle
   end
 
   def bottom_refrect(ball, blocks)
+    contain = ball.contains?(ball.x, self.y + self.height + ball.radius)
+    range = ball.x >= self.x && ball.x <= self.x + self.width
+    if contain && range
+      ball.y_flug = true
+      self.remove
+      blocks.delete(self)
+    end
   end
 
   def right_refrect(ball, blocks)
+    contain = ball.contains?(self.x + self.width + ball.radius, ball.y)
+    range = ball.y >= self.y && ball.y <= self.y + self.height
+    if contain && range
+      ball.x_flug = true
+      self.remove
+      blocks.delete(self)
+    end
   end
 
   def left_refrect(ball, blocks)
+    contain = ball.contains?(self.x - ball.radius, ball.y)
+    range = ball.y >= self.y && ball.y <= self.y + self.height
+    if contain && range
+      ball.x_flug = false
+      self.remove
+      blocks.delete(self)
+    end
   end
 end
