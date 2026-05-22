@@ -8,6 +8,8 @@ set(
   height: 600
 )
 
+@status = :game_start
+
 ball = Ball.new
 bar = Bar.new
 blocks = Block.set_blocks
@@ -24,13 +26,23 @@ on :key do |event|
   bar.move(event)
 end
 
+tick = 0
+
 update do
-  if ball.is_move
-    ball.move
-    bar.refrect(ball)
-    Block.broken_by(ball, blocks)
-  else
-    ball.follow(bar)
+  case @status
+  when :game_start
+    ball.speed = rand(3..10) if tick % 60 == 0
+    if ball.is_move
+      ball.move
+      bar.refrect(ball)
+      Block.broken_by(ball, blocks)
+    else
+      ball.follow(bar)
+    end
+    tick += 1
+    @status = :game_clear if blocks.size == 0
+  when :game_clear
+    p "clear"
   end
 end
 

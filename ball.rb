@@ -60,6 +60,8 @@ class Ball < Circle
   def fall_down
     if self.y > Window.height
       self.is_move = false
+      self.x_flug = true
+      self.y_flug = false
     end
   end
 end
